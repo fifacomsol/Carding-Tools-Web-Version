@@ -29,65 +29,98 @@
       background: linear-gradient(135deg, #0f172a, #1e293b);
       color: white;
       margin: 0;
-      padding: 20px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
       line-height: 1.6;
+      overflow-x: hidden;
     }
     
     h1 {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       font-weight: 600;
       background: var(--primary-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      font-size: 2.2rem;
+      font-size: 2rem;
       letter-spacing: 1px;
     }
     
     h2 {
       font-weight: 500;
       margin-top: 0;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       background: var(--secondary-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      font-size: 1.5rem;
+      padding-left: 50px; /* Add padding to avoid overlap with back button */
     }
     
     .container {
       max-width: 800px;
       width: 100%;
+      padding: 0 10px;
     }
     
     .card {
       background: var(--card-gradient);
       border-radius: 16px;
-      padding: 25px;
-      margin-bottom: 25px;
+      padding: 20px;
+      margin-bottom: 20px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .back-arrow {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10; /* Ensure it stays above other elements */
+    }
+    
+    .back-arrow:hover {
+      transform: translateX(-5px);
+      color: #a78bfa;
+      background: rgba(30, 41, 59, 0.8);
     }
     
     button {
       background: var(--button-gradient);
       color: white;
       border: none;
-      padding: 12px 18px;
+      padding: 10px 16px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-      margin-right: 10px;
-      margin-top: 10px;
+      font-size: 14px;
+      margin-right: 8px;
+      margin-top: 8px;
       transition: all 0.3s;
       font-weight: 500;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       letter-spacing: 0.5px;
+      touch-action: manipulation;
     }
     
     button:hover {
@@ -102,14 +135,15 @@
     .tools {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      margin-top: 30px;
+      gap: 15px;
+      margin-top: 25px;
+      width: 100%;
     }
     
     .tool-button {
-      padding: 20px;
+      padding: 15px;
       text-align: center;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       border-radius: 12px;
       cursor: pointer;
@@ -159,15 +193,16 @@
     
     textarea {
       width: 100%;
-      height: 150px;
+      max-width: 100%;
+      height: 120px;
       background-color: rgba(30, 41, 59, 0.7);
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 8px;
-      padding: 12px;
+      padding: 10px;
       font-family: 'Poppins', monospace;
       resize: vertical;
-      font-size: 14px;
+      font-size: 13px;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
       outline: none;
     }
@@ -182,11 +217,12 @@
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 8px;
-      padding: 12px;
-      width: 100%;
+      padding: 10px;
       font-family: 'Poppins', monospace;
       outline: none;
-      font-size: 14px;
+      font-size: 13px;
+      width: 100%;
+      max-width: 100%;
     }
     
     input:focus, select:focus {
@@ -194,11 +230,36 @@
       box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
     }
     
+    /* Date inputs for Card Generator */
+    .date-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px; /* Increased gap for better spacing */
+      margin-bottom: 12px;
+      align-items: flex-start; /* Align items to the top */
+    }
+    
+    .date-inputs div {
+      flex: 1;
+      min-width: 90px;
+      display: flex;
+      flex-direction: column; /* Stack label and input vertically */
+    }
+    
+    .date-inputs label {
+      margin-bottom: 5px; /* Space between label and input */
+      font-size: 13px;
+    }
+    
+    .date-inputs input {
+      width: 100%;
+    }
+    
     .result-card {
       background: rgba(30, 41, 59, 0.5);
       border-radius: 10px;
-      padding: 20px;
-      margin-top: 20px;
+      padding: 15px;
+      margin-top: 15px;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -212,13 +273,15 @@
     
     .result-card h3 {
       margin-top: 0;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-weight: 500;
       color: #a78bfa;
+      font-size: 1.2rem;
     }
     
     .result-card p {
-      margin: 6px 0;
+      margin: 5px 0;
+      font-size: 0.9rem;
     }
     
     .hidden {
@@ -275,8 +338,8 @@
     }
     
     .tool-icon {
-      font-size: 24px;
-      margin-bottom: 8px;
+      font-size: 22px;
+      margin-bottom: 6px;
       opacity: 0.9;
     }
     
@@ -303,39 +366,45 @@
     }
     
     .loading-spinner {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
+      display: block;
+      width: 36px;
+      height: 36px;
       border: 4px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       border-top-color: #ffffff;
       animation: spinner 1s linear infinite;
-      margin: 20px auto;
+      margin: 15px auto;
     }
     
     .loading-container {
       text-align: center;
-      padding: 20px;
+      padding: 15px;
       background: linear-gradient(135deg, var(--color-primary-dark), var(--color-secondary));
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       color: white;
+      width: 100%;
+      max-width: 100%;
     }
 
-    /* New styles for Card Checker sections */
+    .loading-container p {
+      font-size: 0.9rem;
+      margin: 5px 0;
+    }
+
     .card-checker-results {
-      margin-top: 20px;
+      margin-top: 15px;
     }
 
     .result-sections {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 15px;
     }
 
     .result-section {
       flex: 1;
-      min-width: 300px;
+      min-width: 280px;
     }
 
     .result-section h3 {
@@ -343,25 +412,126 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
     }
 
     .result-section .result-card {
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .result-section.unknown {
       flex: 100%;
     }
 
-    /* Responsive design for phone */
     @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        padding-left: 60px; /* Increased padding to avoid overlap on mobile */
+      }
+
+      .card {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .back-arrow {
+        top: 20px; /* Increased to avoid overlap with title */
+        left: 20px; /* Increased for better spacing */
+        width: 40px; /* Slightly larger for better touch target */
+        height: 40px;
+        font-size: 18px;
+      }
+
+      button {
+        padding: 8px 14px;
+        font-size: 13px;
+        margin-right: 6px;
+        margin-top: 6px;
+      }
+
+      .tools {
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .tool-button {
+        padding: 12px;
+        font-size: 15px;
+      }
+
+      .tool-icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+
+      textarea {
+        height: 100px;
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      input, select {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .date-inputs {
+        flex-direction: column; /* Stack inputs vertically on mobile */
+        gap: 12px; /* Increased gap for better separation */
+        margin-bottom: 10px;
+      }
+
+      .date-inputs div {
+        min-width: 100%; /* Full width on mobile */
+      }
+
+      .date-inputs label {
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .result-card {
+        padding: 12px;
+        margin-top: 12px;
+      }
+
+      .result-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+      }
+
+      .result-card p {
+        font-size: 0.85rem;
+      }
+
       .result-sections {
         flex-direction: column;
+        gap: 10px;
       }
 
       .result-section {
         min-width: 100%;
+      }
+
+      .loading-spinner {
+        width: 32px;
+        height: 32px;
+        margin: 10px auto;
+      }
+
+      .loading-container p {
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -390,25 +560,25 @@
         </div>
       </div>
       
-      <div class="card" style="margin-top: 30px; text-align: center;">
-        <div style="margin-bottom: 10px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 500;">Made by Walter</div>
-        <p>Join Discord: <a href="https://discord.gg/rgWcEw5G8a" style="color: #a78bfa; text-decoration: none; font-weight: 500; transition: all 0.3s ease;">discord.gg/rgWcEw5G8a</a></p>
+      <div class="card" style="margin-top: 25px; text-align: center;">
+        <div style="margin-bottom: 8px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 500;">Made by Walter</div>
+        <p style="font-size: 0.9rem;">Join Discord: <a href="https://discord.gg/rgWcEw5G8a" style="color: #a78bfa; text-decoration: none; font-weight: 500; transition: all 0.3s ease;">discord.gg/rgWcEw5G8a</a></p>
       </div>
     </div>
     
     <div id="bin-checker-screen" class="hidden">
       <div class="card">
+        <button class="back-arrow" onclick="showScreen('main-screen')" title="Back to Main">←</button>
         <h2>BIN Checker</h2>
         <p>Enter BIN (first 6 digits of card number)</p>
         
         <textarea id="bin-input" placeholder="Enter BIN numbers (separated by space, comma, or new lines)"></textarea>
         
-        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
           <button class="pulse" style="background: var(--bin-gradient);" onclick="checkBIN()">Check BIN</button>
           <button style="background: linear-gradient(135deg, #4338ca, #3b82f6);" onclick="document.getElementById('bin-file-import').click()">Import from File</button>
           <input type="file" id="bin-file-import" style="display: none" onchange="importBINFile(this)" accept=".txt,.csv"/>
           <button style="background: linear-gradient(135deg, #ef4444, #f87171);" onclick="clearBINResults()">Clear</button>
-          <button style="background: linear-gradient(135deg, #1e293b, #334155);" onclick="showScreen('main-screen')">Back to Main</button>
         </div>
         
         <div id="bin-results"></div>
@@ -417,70 +587,101 @@
     
     <div id="card-generator-screen" class="hidden">
       <div class="card">
+        <button class="back-arrow" onclick="showScreen('main-screen')" title="Back to Main">←</button>
         <h2>Card Generator</h2>
         
-        <div style="margin-bottom: 15px;">
+        <div style="margin-bottom: 12px;">
           <label>BIN (first 6 digits):</label>
           <input type="text" id="gen-bin" placeholder="e.g., 423456">
         </div>
         
-        <div style="margin-bottom: 15px;">
+        <div class="date-inputs">
+          <div>
+            <label>Day (DD):</label>
+            <input type="number" id="gen-dd" placeholder="Leave blank to randomize" min="1" max="31">
+          </div>
+          <div>
+            <label>Month (MM):</label>
+            <input type="number" id="gen-mm" placeholder="Leave blank to randomize" min="1" max="12">
+          </div>
+          <div>
+            <label>Year (YY):</label>
+            <input type="number" id="gen-yy" placeholder="Leave blank to randomize" min="25" max="99">
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 12px;">
           <label>Quantity:</label>
           <input type="number" id="gen-quantity" value="10" min="1" max="100">
         </div>
         
-        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
           <button class="pulse" style="background: var(--generator-gradient);" onclick="generateCards()">Generate Cards</button>
           <button style="background: linear-gradient(135deg, #ef4444, #f87171);" onclick="clearGeneratorResults()">Clear</button>
-          <button style="background: linear-gradient(135deg, #1e293b, #334155);" onclick="showScreen('main-screen')">Back to Main</button>
         </div>
         
-        <div id="generator-results" class="hidden" style="margin-top: 20px;">
+        <div id="generator-results" class="hidden" style="margin-top: 15px;">
           <h3>Generated Cards</h3>
           <button class="pulse" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);" onclick="copyGeneratedCards()">Copy All</button>
-          <textarea id="generated-cards" readonly style="margin-top: 10px;"></textarea>
+          <textarea id="generated-cards" readonly style="margin-top: 8px;"></textarea>
         </div>
       </div>
 
-      <div class="card" style="margin-top: 20px;">
+      <div class="card">
+        <button class="back-arrow" onclick="showScreen('main-screen')" title="Back to Main">←</button>
         <h2>Multiple Card Generator</h2>
         
-        <div style="margin-bottom: 15px;">
+        <div style="margin-bottom: 12px;">
           <label>Multiple BINs (one per line):</label>
           <textarea id="multi-gen-bins" placeholder="Enter BINs, one per line"></textarea>
         </div>
         
-        <div style="margin-bottom: 15px;">
+        <div class="date-inputs">
+          <div>
+            <label>Day (DD):</label>
+            <input type="number" id="multi-gen-dd" placeholder="Leave blank to randomize" min="1" max="31">
+          </div>
+          <div>
+            <label>Month (MM):</label>
+            <input type="number" id="multi-gen-mm" placeholder="Leave blank to randomize" min="1" max="12">
+          </div>
+          <div>
+            <label>Year (YY):</label>
+            <input type="number" id="multi-gen-yy" placeholder="Leave blank to randomize" min="25" max="99">
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 12px;">
           <label>Cards per BIN:</label>
           <input type="number" id="multi-gen-quantity" value="5" min="1" max="50">
         </div>
         
-        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
           <button class="pulse" style="background: var(--generator-gradient);" onclick="generateMultipleBINCards()">Generate Cards</button>
           <button style="background: linear-gradient(135deg, #ef4444, #f87171);" onclick="clearMultiGeneratorResults()">Clear</button>
         </div>
         
-        <div id="multi-generator-results" class="hidden" style="margin-top: 20px;">
+        <div id="multi-generator-results" class="hidden" style="margin-top: 15px;">
           <h3>Generated Cards</h3>
           <button class="pulse" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);" onclick="copyMultiGeneratedCards()">Copy All</button>
-          <textarea id="multi-generated-cards" readonly style="margin-top: 10px;"></textarea>
+          <textarea id="multi-generated-cards" readonly style="margin-top: 8px;"></textarea>
         </div>
       </div>
     </div>
     
     <div id="card-checker-screen" class="hidden">
       <div class="card">
+        <button class="back-arrow" onclick="showScreen('main-screen')" title="Back to Main">←</button>
         <h2>Card Checker</h2>
         <p>Enter cards to validate (format: XXXXXXXXXXXXXXXX|MM|YY|CVV)</p>
         
         <textarea id="cards-input" placeholder="One card per line, format: XXXXXXXXXXXXXXXX|MM|YY|CVV"></textarea>
         
-        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
           <button class="pulse" style="background: var(--checker-gradient);" onclick="checkCards()">Check Cards</button>
           <button style="background: linear-gradient(135deg, #4338ca, #3b82f6);" onclick="document.getElementById('cards-file-import').click()">Import from File</button>
           <input type="file" id="cards-file-import" style="display: none" onchange="importCardsFile(this)" accept=".txt,.csv"/>
           <button style="background: linear-gradient(135deg, #ef4444, #f87171);" onclick="clearCardResults()">Clear</button>
-          <button style="background: linear-gradient(135deg, #1e293b, #334155);" onclick="showScreen('main-screen')">Back to Main</button>
         </div>
         
         <div id="card-results">
@@ -492,9 +693,10 @@
 
     <div id="bin-generator-screen" class="hidden">
       <div class="card">
+        <button class="back-arrow" onclick="showScreen('main-screen')" title="Back to Main">←</button>
         <h2>BIN Generator</h2>
         
-        <div style="margin-bottom: 15px;">
+        <div style="margin-bottom: 12px;">
           <label>Card Type:</label>
           <select id="bin-gen-type">
             <option value="Visa">Visa</option>
@@ -504,32 +706,31 @@
           </select>
         </div>
         
-        <div style="margin-bottom: 15px;">
+        <div style="margin-bottom: 12px;">
           <label>Quantity:</label>
           <input type="number" id="bin-gen-quantity" value="10" min="1" max="100">
         </div>
         
-        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
           <button class="pulse" style="background: var(--bin-generator-gradient);" onclick="generateBINs()">Generate BINs</button>
           <button style="background: linear-gradient(135deg, #ef4444, #f87171);" onclick="clearBINGeneratorResults()">Clear</button>
-          <button style="background: linear-gradient(135deg, #1e293b, #334155);" onclick="showScreen('main-screen')">Back to Main</button>
         </div>
         
-        <div id="bin-generator-results" class="hidden" style="margin-top: 20px;">
+        <div id="bin-generator-results" class="hidden" style="margin-top: 15px;">
           <h3>Generated BINs</h3>
           <button class="pulse" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);" onclick="copyGeneratedBINs()">Copy All</button>
           <button class="pulse" style="background: linear-gradient(135deg, #2dd4bf, #14b8a6);" onclick="downloadGeneratedBINs()">Download Results</button>
-          <textarea id="generated-bins" readonly style="margin-top: 10px;"></textarea>
+          <button class="pulse" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);" onclick="copyBINsOnly()">Copy BINs Only</button>
+          <button class="pulse" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="downloadBINsOnly()">Download BINs Only</button>
+          <textarea id="generated-bins" readonly style="margin-top: 8px;"></textarea>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Log to confirm script is loading
     console.log('Credit Card Tools script loaded.');
 
-    // Cache to store card check results for consistency
     const cardCheckCache = new Map();
 
     function showScreen(screenId) {
@@ -663,11 +864,13 @@
         });
         
         results += `
-          <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+          <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
             <button class="pulse" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);" onclick="copyBINResults()">Copy All</button>
             <button class="pulse" style="background: linear-gradient(135deg, #2dd4bf, #14b8a6);" onclick="downloadBINResults()">Download Results</button>
+            <button class="pulse" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);" onclick="copyBINsOnlyFromResults()">Copy BINs Only</button>
+            <button class="pulse" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="downloadBINsOnlyFromResults()">Download BINs Only</button>
           </div>
-          <div style="margin-top: 20px; font-size: 0.8em; color: #718096; text-align: center;">
+          <div style="margin-top: 15px; font-size: 0.8em; color: #718096; text-align: center;">
             Database: ${rows.length-1} BINs | Checked: ${bins.length} queries
           </div>
         `;
@@ -737,6 +940,44 @@
       URL.revokeObjectURL(url);
     }
     
+    function copyBINsOnlyFromResults() {
+      const resultsDiv = document.getElementById('bin-results');
+      const resultCards = resultsDiv.getElementsByClassName('result-card');
+      let binsOnly = '';
+      
+      Array.from(resultCards).forEach(card => {
+        const bin = card.querySelector('h3')?.textContent.replace('BIN: ', '') || '';
+        if (bin) binsOnly += `${bin}\n`;
+      });
+      
+      const textarea = document.createElement('textarea');
+      textarea.value = binsOnly.trim();
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      alert('BINs only copied to clipboard!');
+    }
+    
+    function downloadBINsOnlyFromResults() {
+      const resultsDiv = document.getElementById('bin-results');
+      const resultCards = resultsDiv.getElementsByClassName('result-card');
+      let binsOnly = '';
+      
+      Array.from(resultCards).forEach(card => {
+        const bin = card.querySelector('h3')?.textContent.replace('BIN: ', '') || '';
+        if (bin) binsOnly += `${bin}\n`;
+      });
+      
+      const blob = new Blob([binsOnly.trim()], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'bins_only.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    
     function clearBINResults() {
       document.getElementById('bin-results').innerHTML = '';
       document.getElementById('bin-input').value = '';
@@ -746,18 +987,24 @@
       document.getElementById('card-check-spinner').classList.add('hidden');
       document.getElementById('card-check-results').innerHTML = '';
       document.getElementById('cards-input').value = '';
-      cardCheckCache.clear(); // Clear cache when clearing results
+      cardCheckCache.clear();
     }
     
     function clearGeneratorResults() {
       document.getElementById('generator-results').classList.add('hidden');
       document.getElementById('generated-cards').value = '';
       document.getElementById('gen-bin').value = '';
+      document.getElementById('gen-dd').value = '';
+      document.getElementById('gen-mm').value = '';
+      document.getElementById('gen-yy').value = '';
       document.getElementById('gen-quantity').value = '10';
     }
     
     function generateCards() {
       const bin = document.getElementById('gen-bin').value.replace(/\D/g, '');
+      const dd = document.getElementById('gen-dd').value;
+      const mm = document.getElementById('gen-mm').value;
+      const yy = document.getElementById('gen-yy').value;
       const quantity = parseInt(document.getElementById('gen-quantity').value) || 10;
       const resultsArea = document.getElementById('generated-cards');
       const resultsContainer = document.getElementById('generator-results');
@@ -779,14 +1026,23 @@
       
       setTimeout(() => {
         const cards = [];
+        const currentYear = new Date().getFullYear();
+        const currentYearShort = parseInt(currentYear.toString().slice(-2));
+        
         for (let i = 0; i < quantity; i++) {
           const cardNumber = generateCardNumber(bin);
-          const month = Math.floor(Math.random() * 12) + 1;
-          const currentYear = new Date().getFullYear();
-          const year = currentYear + Math.floor(Math.random() * 5) + 1;
+          
+          const day = dd ? parseInt(dd) : Math.floor(Math.random() * 31) + 1;
+          const month = mm ? parseInt(mm) : Math.floor(Math.random() * 12) + 1;
+          const year = yy ? parseInt(yy) : currentYearShort + Math.floor(Math.random() * 5) + 1;
+          
+          const validDay = Math.min(day, 31);
+          const validMonth = Math.min(month, 12);
+          const validYear = Math.max(year, currentYearShort);
+          
           const cvv = Math.floor(Math.random() * 900) + 100;
           
-          cards.push(`${cardNumber}|${String(month).padStart(2, '0')}|${year}|${cvv}`);
+          cards.push(`${cardNumber}|${String(validDay).padStart(2, '0')}|${String(validMonth).padStart(2, '0')}|${validYear}|${cvv}`);
         }
         
         const spinner = document.getElementById('generator-spinner');
@@ -829,6 +1085,9 @@
       document.getElementById('multi-generator-results').classList.add('hidden');
       document.getElementById('multi-generated-cards').value = '';
       document.getElementById('multi-gen-bins').value = '';
+      document.getElementById('multi-gen-dd').value = '';
+      document.getElementById('multi-gen-mm').value = '';
+      document.getElementById('multi-gen-yy').value = '';
       document.getElementById('multi-gen-quantity').value = '5';
     }
     
@@ -841,6 +1100,9 @@
     
     function generateMultipleBINCards() {
       const binsInput = document.getElementById('multi-gen-bins').value;
+      const dd = document.getElementById('multi-gen-dd').value;
+      const mm = document.getElementById('multi-gen-mm').value;
+      const yy = document.getElementById('multi-gen-yy').value;
       const quantity = parseInt(document.getElementById('multi-gen-quantity').value) || 5;
       const resultsArea = document.getElementById('multi-generated-cards');
       const resultsContainer = document.getElementById('multi-generator-results');
@@ -873,15 +1135,23 @@
       setTimeout(() => {
         const allCards = [];
         const currentYear = new Date().getFullYear();
+        const currentYearShort = parseInt(currentYear.toString().slice(-2));
         
         bins.forEach(bin => {
           for (let i = 0; i < quantity; i++) {
             const cardNumber = generateCardNumber(bin);
-            const month = Math.floor(Math.random() * 12) + 1;
-            const year = currentYear + Math.floor(Math.random() * 5) + 1;
+            
+            const day = dd ? parseInt(dd) : Math.floor(Math.random() * 31) + 1;
+            const month = mm ? parseInt(mm) : Math.floor(Math.random() * 12) + 1;
+            const year = yy ? parseInt(yy) : currentYearShort + Math.floor(Math.random() * 5) + 1;
+            
+            const validDay = Math.min(day, 31);
+            const validMonth = Math.min(month, 12);
+            const validYear = Math.max(year, currentYearShort);
+            
             const cvv = Math.floor(Math.random() * 900) + 100;
             
-            allCards.push(`${cardNumber}|${String(month).padStart(2, '0')}|${year}|${cvv}`);
+            allCards.push(`${cardNumber}|${String(validDay).padStart(2, '0')}|${String(validMonth).padStart(2, '0')}|${validYear}|${cvv}`);
           }
         });
         
@@ -1019,10 +1289,8 @@
         `;
       }
       
-      // Render the grouped results
       let resultsHtml = '<div class="result-sections">';
       
-      // Live Cards Section
       resultsHtml += `
         <div class="result-section live">
           <h3>Live Cards (${liveCards.length})</h3>
@@ -1030,7 +1298,6 @@
         </div>
       `;
       
-      // Dead Cards Section
       resultsHtml += `
         <div class="result-section dead">
           <h3>Dead Cards (${deadCards.length})</h3>
@@ -1038,7 +1305,6 @@
         </div>
       `;
       
-      // Unknown Cards Section
       resultsHtml += `
         <div class="result-section unknown">
           <h3>Unknown Cards (${unknownCards.length})</h3>
@@ -1061,14 +1327,13 @@
       let sum = 0;
       let isEven = false;
       
-      // Iterate from right to left
       for (let i = digits.length - 1; i >= 0; i--) {
         let digit = digits[i];
         
         if (isEven) {
           digit *= 2;
           if (digit > 9) {
-            digit -= 9; // Equivalent to summing the digits of the doubled number
+            digit -= 9;
           }
         }
         
@@ -1161,7 +1426,7 @@
         if (spinner) spinner.remove();
         
         resultsArea.value = bins.join('\n');
-      }, 2000); // 2-second delay for the spinner
+      }, 2000);
     }
 
     function clearBINGeneratorResults() {
@@ -1185,6 +1450,24 @@
       const a = document.createElement('a');
       a.href = url;
       a.download = 'generated_bins.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function copyBINsOnly() {
+      const textarea = document.getElementById('generated-bins');
+      textarea.select();
+      document.execCommand('copy');
+      alert('BINs only copied to clipboard!');
+    }
+
+    function downloadBINsOnly() {
+      const textarea = document.getElementById('generated-bins');
+      const blob = new Blob([textarea.value], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'bins_only.txt';
       a.click();
       URL.revokeObjectURL(url);
     }
