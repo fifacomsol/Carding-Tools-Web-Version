@@ -42,12 +42,19 @@
       text-align: center;
       margin-bottom: 30px;
       font-weight: 600;
-      background: var(--primary-gradient);
+      font-size: 2.5rem; /* Increased size */
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef, #ec4899, #10b981, #0ea5e9);
+      background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      font-size: 2rem;
-      letter-spacing: 1px;
+      animation: animateText 4s linear infinite; /* Animated gradient */
+      letter-spacing: 2px;
+    }
+    
+    @keyframes animateText {
+      0% { background-position: 200% 0; }
+      100% { background-position: 0 0; }
     }
     
     h2 {
@@ -59,7 +66,7 @@
       background-clip: text;
       color: transparent;
       font-size: 1.5rem;
-      padding-left: 50px; /* Add padding to avoid overlap with back button */
+      padding-left: 50px;
     }
     
     .container {
@@ -97,7 +104,7 @@
       font-size: 20px;
       cursor: pointer;
       transition: all 0.3s ease;
-      z-index: 10; /* Ensure it stays above other elements */
+      z-index: 10;
     }
     
     .back-arrow:hover {
@@ -230,24 +237,23 @@
       box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
     }
     
-    /* Date inputs for Card Generator */
     .date-inputs {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px; /* Increased gap for better spacing */
+      gap: 10px;
       margin-bottom: 12px;
-      align-items: flex-start; /* Align items to the top */
+      align-items: flex-start;
     }
     
     .date-inputs div {
       flex: 1;
       min-width: 90px;
       display: flex;
-      flex-direction: column; /* Stack label and input vertically */
+      flex-direction: column;
     }
     
     .date-inputs label {
-      margin-bottom: 5px; /* Space between label and input */
+      margin-bottom: 5px;
       font-size: 13px;
     }
     
@@ -430,14 +436,14 @@
       }
 
       h1 {
-        font-size: 1.8rem;
+        font-size: 2.2rem; /* Increased size for mobile */
         margin-bottom: 20px;
       }
 
       h2 {
         font-size: 1.3rem;
         margin-bottom: 10px;
-        padding-left: 60px; /* Increased padding to avoid overlap on mobile */
+        padding-left: 60px;
       }
 
       .card {
@@ -446,9 +452,9 @@
       }
 
       .back-arrow {
-        top: 20px; /* Increased to avoid overlap with title */
-        left: 20px; /* Increased for better spacing */
-        width: 40px; /* Slightly larger for better touch target */
+        top: 20px;
+        left: 20px;
+        width: 40px;
         height: 40px;
         font-size: 18px;
       }
@@ -487,13 +493,13 @@
       }
 
       .date-inputs {
-        flex-direction: column; /* Stack inputs vertically on mobile */
-        gap: 12px; /* Increased gap for better separation */
+        flex-direction: column;
+        gap: 12px;
         margin-bottom: 10px;
       }
 
       .date-inputs div {
-        min-width: 100%; /* Full width on mobile */
+        min-width: 100%;
       }
 
       .date-inputs label {
