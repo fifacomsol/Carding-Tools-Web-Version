@@ -42,13 +42,13 @@
       text-align: center;
       margin-bottom: 30px;
       font-weight: 600;
-      font-size: 2.5rem; /* Increased size */
+      font-size: 2.5rem;
       background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef, #ec4899, #10b981, #0ea5e9);
       background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: animateText 4s linear infinite; /* Animated gradient */
+      animation: animateText 4s linear infinite;
       letter-spacing: 2px;
     }
     
@@ -436,7 +436,7 @@
       }
 
       h1 {
-        font-size: 2.2rem; /* Increased size for mobile */
+        font-size: 2.2rem;
         margin-bottom: 20px;
       }
 
@@ -614,6 +614,10 @@
             <label>Year (YY):</label>
             <input type="number" id="gen-yy" placeholder="Leave blank to randomize" min="25" max="99">
           </div>
+          <div>
+            <label>CVV:</label>
+            <input type="number" id="gen-cvv" placeholder="Leave blank to randomize" min="100" max="999">
+          </div>
         </div>
         
         <div style="margin-bottom: 12px;">
@@ -654,6 +658,10 @@
           <div>
             <label>Year (YY):</label>
             <input type="number" id="multi-gen-yy" placeholder="Leave blank to randomize" min="25" max="99">
+          </div>
+          <div>
+            <label>CVV:</label>
+            <input type="number" id="multi-gen-cvv" placeholder="Leave blank to randomize" min="100" max="999">
           </div>
         </div>
         
@@ -726,8 +734,6 @@
           <h3>Generated BINs</h3>
           <button class="pulse" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);" onclick="copyGeneratedBINs()">Copy All</button>
           <button class="pulse" style="background: linear-gradient(135deg, #2dd4bf, #14b8a6);" onclick="downloadGeneratedBINs()">Download Results</button>
-          <button class="pulse" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);" onclick="copyBINsOnly()">Copy BINs Only</button>
-          <button class="pulse" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="downloadBINsOnly()">Download BINs Only</button>
           <textarea id="generated-bins" readonly style="margin-top: 8px;"></textarea>
         </div>
       </div>
@@ -873,8 +879,6 @@
           <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
             <button class="pulse" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);" onclick="copyBINResults()">Copy All</button>
             <button class="pulse" style="background: linear-gradient(135deg, #2dd4bf, #14b8a6);" onclick="downloadBINResults()">Download Results</button>
-            <button class="pulse" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);" onclick="copyBINsOnlyFromResults()">Copy BINs Only</button>
-            <button class="pulse" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="downloadBINsOnlyFromResults()">Download BINs Only</button>
           </div>
           <div style="margin-top: 15px; font-size: 0.8em; color: #718096; text-align: center;">
             Database: ${rows.length-1} BINs | Checked: ${bins.length} queries
@@ -946,44 +950,6 @@
       URL.revokeObjectURL(url);
     }
     
-    function copyBINsOnlyFromResults() {
-      const resultsDiv = document.getElementById('bin-results');
-      const resultCards = resultsDiv.getElementsByClassName('result-card');
-      let binsOnly = '';
-      
-      Array.from(resultCards).forEach(card => {
-        const bin = card.querySelector('h3')?.textContent.replace('BIN: ', '') || '';
-        if (bin) binsOnly += `${bin}\n`;
-      });
-      
-      const textarea = document.createElement('textarea');
-      textarea.value = binsOnly.trim();
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      alert('BINs only copied to clipboard!');
-    }
-    
-    function downloadBINsOnlyFromResults() {
-      const resultsDiv = document.getElementById('bin-results');
-      const resultCards = resultsDiv.getElementsByClassName('result-card');
-      let binsOnly = '';
-      
-      Array.from(resultCards).forEach(card => {
-        const bin = card.querySelector('h3')?.textContent.replace('BIN: ', '') || '';
-        if (bin) binsOnly += `${bin}\n`;
-      });
-      
-      const blob = new Blob([binsOnly.trim()], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'bins_only.txt';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-    
     function clearBINResults() {
       document.getElementById('bin-results').innerHTML = '';
       document.getElementById('bin-input').value = '';
@@ -1003,6 +969,7 @@
       document.getElementById('gen-dd').value = '';
       document.getElementById('gen-mm').value = '';
       document.getElementById('gen-yy').value = '';
+      document.getElementById('gen-cvv').value = '';
       document.getElementById('gen-quantity').value = '10';
     }
     
@@ -1011,6 +978,7 @@
       const dd = document.getElementById('gen-dd').value;
       const mm = document.getElementById('gen-mm').value;
       const yy = document.getElementById('gen-yy').value;
+      const cvv = document.getElementById('gen-cvv').value;
       const quantity = parseInt(document.getElementById('gen-quantity').value) || 10;
       const resultsArea = document.getElementById('generated-cards');
       const resultsContainer = document.getElementById('generator-results');
@@ -1041,14 +1009,13 @@
           const day = dd ? parseInt(dd) : Math.floor(Math.random() * 31) + 1;
           const month = mm ? parseInt(mm) : Math.floor(Math.random() * 12) + 1;
           const year = yy ? parseInt(yy) : currentYearShort + Math.floor(Math.random() * 5) + 1;
+          const validCvv = cvv ? parseInt(cvv) : Math.floor(Math.random() * 900) + 100;
           
           const validDay = Math.min(day, 31);
           const validMonth = Math.min(month, 12);
           const validYear = Math.max(year, currentYearShort);
           
-          const cvv = Math.floor(Math.random() * 900) + 100;
-          
-          cards.push(`${cardNumber}|${String(validDay).padStart(2, '0')}|${String(validMonth).padStart(2, '0')}|${validYear}|${cvv}`);
+          cards.push(`${cardNumber}|${String(validDay).padStart(2, '0')}|${String(validMonth).padStart(2, '0')}|${validYear}|${String(validCvv).padStart(3, '0')}`);
         }
         
         const spinner = document.getElementById('generator-spinner');
@@ -1094,6 +1061,7 @@
       document.getElementById('multi-gen-dd').value = '';
       document.getElementById('multi-gen-mm').value = '';
       document.getElementById('multi-gen-yy').value = '';
+      document.getElementById('multi-gen-cvv').value = '';
       document.getElementById('multi-gen-quantity').value = '5';
     }
     
@@ -1109,6 +1077,7 @@
       const dd = document.getElementById('multi-gen-dd').value;
       const mm = document.getElementById('multi-gen-mm').value;
       const yy = document.getElementById('multi-gen-yy').value;
+      const cvv = document.getElementById('multi-gen-cvv').value;
       const quantity = parseInt(document.getElementById('multi-gen-quantity').value) || 5;
       const resultsArea = document.getElementById('multi-generated-cards');
       const resultsContainer = document.getElementById('multi-generator-results');
@@ -1150,14 +1119,13 @@
             const day = dd ? parseInt(dd) : Math.floor(Math.random() * 31) + 1;
             const month = mm ? parseInt(mm) : Math.floor(Math.random() * 12) + 1;
             const year = yy ? parseInt(yy) : currentYearShort + Math.floor(Math.random() * 5) + 1;
+            const validCvv = cvv ? parseInt(cvv) : Math.floor(Math.random() * 900) + 100;
             
             const validDay = Math.min(day, 31);
             const validMonth = Math.min(month, 12);
             const validYear = Math.max(year, currentYearShort);
             
-            const cvv = Math.floor(Math.random() * 900) + 100;
-            
-            allCards.push(`${cardNumber}|${String(validDay).padStart(2, '0')}|${String(validMonth).padStart(2, '0')}|${validYear}|${cvv}`);
+            allCards.push(`${cardNumber}|${String(validDay).padStart(2, '0')}|${String(validMonth).padStart(2, '0')}|${validYear}|${String(validCvv).padStart(3, '0')}`);
           }
         });
         
@@ -1301,6 +1269,14 @@
         <div class="result-section live">
           <h3>Live Cards (${liveCards.length})</h3>
           ${liveCards.length > 0 ? liveCards.join('') : '<p style="color: #718096;">No live cards found.</p>'}
+          ${liveCards.length > 0 ? `
+            <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+              <button class="pulse" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);" onclick="copyLiveCards()">Copy All</button>
+              <button class="pulse" style="background: linear-gradient(135deg, #2dd4bf, #14b8a6);" onclick="downloadLiveCards()">Download All</button>
+              <button class="pulse" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);" onclick="copyLiveCardsOnly()">Copy Cards Only</button>
+              <button class="pulse" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="downloadLiveCardsOnly()">Download Cards Only</button>
+            </div>
+          ` : ''}
         </div>
       `;
       
@@ -1460,20 +1436,88 @@
       URL.revokeObjectURL(url);
     }
 
-    function copyBINsOnly() {
-      const textarea = document.getElementById('generated-bins');
+    function copyLiveCards() {
+      const resultsDiv = document.getElementById('card-check-results');
+      const liveCards = resultsDiv.querySelector('.result-section.live').getElementsByClassName('result-card');
+      let textToCopy = '';
+      
+      Array.from(liveCards).forEach(card => {
+        const cardNumber = card.querySelector('p:nth-child(2)')?.textContent.replace('Card Number: ', '') || '';
+        const expiry = card.querySelector('p:nth-child(3)')?.textContent.replace('Expiry: ', '') || '';
+        const cvv = card.querySelector('p:nth-child(4)')?.textContent.replace('CVV: ', '') || '';
+        const status = card.querySelector('p:nth-child(5)')?.textContent.replace('Status: ', '') || '';
+        const message = card.querySelector('p:nth-child(6)')?.textContent.replace('Message: ', '') || '';
+        
+        textToCopy += `Card Number: ${cardNumber}\nExpiry: ${expiry}\nCVV: ${cvv}\nStatus: ${status}\nMessage: ${message}\n\n`;
+      });
+      
+      const textarea = document.createElement('textarea');
+      textarea.value = textToCopy.trim();
+      document.body.appendChild(textarea);
       textarea.select();
       document.execCommand('copy');
-      alert('BINs only copied to clipboard!');
+      document.body.removeChild(textarea);
+      alert('Live cards copied to clipboard!');
     }
 
-    function downloadBINsOnly() {
-      const textarea = document.getElementById('generated-bins');
-      const blob = new Blob([textarea.value], { type: 'text/plain' });
+    function downloadLiveCards() {
+      const resultsDiv = document.getElementById('card-check-results');
+      const liveCards = resultsDiv.querySelector('.result-section.live').getElementsByClassName('result-card');
+      let textToDownload = '';
+      
+      Array.from(liveCards).forEach(card => {
+        const cardNumber = card.querySelector('p:nth-child(2)')?.textContent.replace('Card Number: ', '') || '';
+        const expiry = card.querySelector('p:nth-child(3)')?.textContent.replace('Expiry: ', '') || '';
+        const cvv = card.querySelector('p:nth-child(4)')?.textContent.replace('CVV: ', '') || '';
+        const status = card.querySelector('p:nth-child(5)')?.textContent.replace('Status: ', '') || '';
+        const message = card.querySelector('p:nth-child(6)')?.textContent.replace('Message: ', '') || '';
+        
+        textToDownload += `Card Number: ${cardNumber}\nExpiry: ${expiry}\nCVV: ${cvv}\nStatus: ${status}\nMessage: ${message}\n\n`;
+      });
+      
+      const blob = new Blob([textToDownload.trim()], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'bins_only.txt';
+      a.download = 'live_cards.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function copyLiveCardsOnly() {
+      const resultsDiv = document.getElementById('card-check-results');
+      const liveCards = resultsDiv.querySelector('.result-section.live').getElementsByClassName('result-card');
+      let textToCopy = '';
+      
+      Array.from(liveCards).forEach(card => {
+        const cardNumber = card.querySelector('p:nth-child(2)')?.textContent.replace('Card Number: ', '').replace(/ /g, '') || '';
+        textToCopy += `${cardNumber}\n`;
+      });
+      
+      const textarea = document.createElement('textarea');
+      textarea.value = textToCopy.trim();
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      alert('Live cards only copied to clipboard!');
+    }
+
+    function downloadLiveCardsOnly() {
+      const resultsDiv = document.getElementById('card-check-results');
+      const liveCards = resultsDiv.querySelector('.result-section.live').getElementsByClassName('result-card');
+      let textToDownload = '';
+      
+      Array.from(liveCards).forEach(card => {
+        const cardNumber = card.querySelector('p:nth-child(2)')?.textContent.replace('Card Number: ', '').replace(/ /g, '') || '';
+        textToDownload += `${cardNumber}\n`;
+      });
+      
+      const blob = new Blob([textToDownload.trim()], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'live_cards_only.txt';
       a.click();
       URL.revokeObjectURL(url);
     }
